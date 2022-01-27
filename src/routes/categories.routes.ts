@@ -1,20 +1,24 @@
 import { Router } from "express";
 
 import { CategoriesRepository } from "../repositories/CategoriesRepository";
+import { MysqlCategoriesRepository } from "../repositories/MysqlCategoriesRepository";
+import { PostgresCategoriesRepository } from "../repositories/PostgresCategoriesRepository";
+import { CreateCategoryService } from "../services/CreateCategoryService";
 
 const categoriesRoutes = Router();
+
 const categoriesRepository = new CategoriesRepository();
+// const categoriesRepository = new PostgresCategoriesRepository();
+// const categoriesRepository = new MysqlCategoriesRepository();
 
 categoriesRoutes.post("/", (req, res) => {
     const { name, description } = req.body;
 
-    const categoryAlreadyExists = categoriesRepository.findByName(name);
+    const createCategoryService = new CreateCategoryService(
+        categoriesRepository
+    );
 
-    if (categoryAlreadyExists) {
-        return res.status(400).json({ error: "Category already exist!" });
-    }
-
-    categoriesRepository.create({ name, description });
+    createCategoryService.execute({ description, name });
 
     return res.status(201).send();
 });
