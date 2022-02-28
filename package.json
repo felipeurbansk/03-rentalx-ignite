@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
-    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "migration": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run"
   },
   "dependencies": {
     "@types/csv-parse": "^1.2.2",
@@ -16,6 +17,7 @@
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.3.0",
+    "tsyringe": "^4.6.0",
     "typeorm": "^0.2.41",
     "uuid": "^8.3.2"
   },
